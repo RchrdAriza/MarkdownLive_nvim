@@ -61,5 +61,7 @@ require("which-key").register({
 })
 ```
 
+You may also be interested in: [LiveServer_nvim](https://www.github.com/RchrdAlv/LiveServer_nvim)
 
+Alternatively you can use my neovim configuration, which already has this function and others. [here](https://www.github.com/RchrdAlv/NvimOnMy_Way)
 

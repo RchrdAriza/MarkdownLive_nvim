@@ -1,11 +1,13 @@
 local defaults = {
-    use_notify = false,
-    port = 5500
+  use_notify = false,
+  port = 5500
 }
+
+local options = {}
 
 local function setup(user_options)
   -- Mezclar las opciones del usuario con las opciones por defecto
-  local options = vim.tbl_extend("force", defaults, user_options or {})
+  options = vim.tbl_extend("force", defaults, user_options or {})
   -- Usar las opciones para modificar el comportamiento de la función start_grip
   -- ...
 end
@@ -15,22 +17,27 @@ local function start_grip()
   local use_notify = options.use_notify
   local port = options.port
   -- Usar esas opciones para iniciar el servidor grip
-  vim.cmd("silent !grip -b % :".. port .. ">/dev/null &")
+  vim.cmd("silent !grip -b % :" .. port .. ">/dev/null &")
   local address = "localhost"
   local message = "Grip starting at http://" .. address .. ":" .. port
   -- Usar o no el plugin notify según la opción
   if use_notify then
-    local notify = require("notify")
+    local notify = require("grip.notify")
     notify(message)
   else
-    vim.api.nvim_echo({{message}}, true, {})
+    vim.api.nvim_echo({ { message } }, true, {})
   end
 end
 
+local function stop()
+  -- Lógica para detener el servidor grip si es necesario
+  -- ...
+end
+
+-- Exportar las funciones y configuraciones necesarias
 return {
   setup = setup,
-  start_grip = start_grip
+  start_grip = start_grip,
+  stop = stop
 }
 
-vim.cmd('command Startg lua start_grip()')
-vim.cmd('command Stopg lua stop()')

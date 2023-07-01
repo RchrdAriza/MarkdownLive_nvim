@@ -29,6 +29,9 @@ function start_grip()
   -- vim.notify(message)
   vim.api.nvim_echo({{message}}, true, {}) 
 end
+
+
+
 ```
 ```* To stop grip```
 ```lua
@@ -40,12 +43,17 @@ function stop()
   -- vim.notify('Grip has stopped')
   local message = "Grip has stopped"
   vim.api.nvim_echo({{message}}, true, {}) 
-end 
+end
+
+vim.cmd('command Startg lua start_grip()') -- to start grip
+vim.cmd('command Stopg lua stop()') -- to stop grip
+
 ```
 To use the functions you can call them from the neovim command line like this:
-```:lua start_grip()``` to start grip.
 
-```:lua stop()``` to stop grip
+```:Startg``` to start grip.
+
+```:Stopg``` to stop grip
 
 ## Optional configuration
 

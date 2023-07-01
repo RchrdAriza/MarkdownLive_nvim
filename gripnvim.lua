@@ -1,6 +1,6 @@
 local defaults = {
     use_notify = false,
-    port = 5000
+    port = 5500
 }
 
 local function setup(user_options)
@@ -32,4 +32,5 @@ return {
   start_grip = start_grip
 }
 
-
+vim.cmd('command Startg lua start_grip()')
+vim.cmd('command Stopg lua stop()')

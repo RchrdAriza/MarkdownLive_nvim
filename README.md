@@ -30,7 +30,7 @@ function start_grip()
   vim.api.nvim_echo({{message}}, true, {}) 
 end
 
-
+vim.cmd('command Startg lua start_grip()') -- to start grip
 
 ```
 ```* To stop grip```
@@ -45,7 +45,6 @@ function stop()
   vim.api.nvim_echo({{message}}, true, {}) 
 end
 
-vim.cmd('command Startg lua start_grip()') -- to start grip
 vim.cmd('command Stopg lua stop()') -- to stop grip
 
 ```
@@ -71,5 +70,5 @@ require("which-key").register({
 
 You may also be interested in: [LiveServer_nvim](https://www.github.com/RchrdAlv/LiveServer_nvim)
 
-Alternatively you can use my neovim configuration, which already has this function and others. [here](https://www.github.com/RchrdAlv/NvimOnMy_Way)
+Alternatively you can use my neovim configuration, which already has this function and others. [here](https://www.github.com/RchrdAriza/NvimOnMy_Way)
 

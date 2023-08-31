@@ -1,8 +1,8 @@
 ### Requirements
 - grip
 - pip
-- [notify](https://github.com/rcarriga/nvim-notify) (optional)
-- [which-key](https://github.com/folke/which-key.nvim) (optional)
+- [notify](https://github.com/rcarriga/nvim-notify) (Required)
+- [which-key](https://github.com/folke/which-key.nvim) (Optional)
 
 Install grip using the python ```pip``` package manager using the following command:
 ```lua
@@ -17,17 +17,29 @@ Copy the following functions to your neovim configuration file:
 ```* To start the grip```
 ```lua
 function start_grip()
-  -- You can change the port as you wish
-  local port = 5500
-  vim.cmd("silent !grip -b % :".. port .. ">/dev/null &")
+  local function command_exists(command)
+    local handle = io.popen("command -v " .. command)
+    local result = handle:read("*a")
+    handle:close()
+    return result ~= ""
+  end
 
-  local address = "localhost"
- 
-  local message = "Grip starting at http://" .. address .. ":" .. port
-  -- In case you have the notify plugin installed uncomment the following lines
-  -- local notify = require("notify")
-  -- vim.notify(message)
-  vim.api.nvim_echo({{message}}, true, {}) 
+  if command_exists("grip") then
+    -- You can change the port as you wish
+    local port = 5500
+    vim.cmd("silent !grip -b % :".. port .. ">/dev/null &")
+
+    local address = "localhost"
+
+    local message = "Grip starting at http://" .. address .. ":" .. port
+    local notify = require("notify")
+    vim.notify(message)
+  else
+
+     local notify = require("notify")
+     notify("Grip is not installed", "error")
+
+  end
 end
 
 vim.cmd('command Startg lua start_grip()') -- to start grip
@@ -37,12 +49,9 @@ vim.cmd('command Startg lua start_grip()') -- to start grip
 ```lua
 function stop()
   vim.cmd('silent !pkill -f grip')
-  
-  -- In case you have the notify plugin installed uncomment the following lines
-  -- local notify = require("notify")
-  -- vim.notify('Grip has stopped')
-  local message = "Grip has stopped"
-  vim.api.nvim_echo({{message}}, true, {}) 
+
+  local notify = require("notify")
+  vim.notify('Grip has stopped')
 end
 
 vim.cmd('command Stopg lua stop()') -- to stop grip
@@ -68,7 +77,6 @@ require("which-key").register({
 })
 ```
 
-You may also be interested in: [LiveServer_nvim](https://www.github.com/RchrdAlv/LiveServer_nvim)
+You may also be interested in: [LiveServer_nvim](https://www.github.com/RchrdAriza/LiveServer_nvim)
 
 Alternatively you can use my neovim configuration, which already has this function and others. [here](https://www.github.com/RchrdAriza/NvimOnMy_Way)
-
